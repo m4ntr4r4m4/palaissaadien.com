@@ -1,10 +1,29 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 const mapUrl =
   'https://www.google.com/maps/place/Palais+Sa%C3%A2diens/@31.6280522,-7.9912659,15z/data=!4m5!3m4!1s0x0:0x9befd8af5840b82f!8m2!3d31.6280522!4d-7.9912659';
 
+const familyImages = [
+  '/images/the-family/family-1.jpg',
+  '/images/the-family/family-2.jpg',
+  '/images/the-family/family-3.jpg',
+  '/images/the-family/family-4.jpg',
+];
+
 export default function HomePage() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % familyImages.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <main>
       <div className="geometric-overlay" />
@@ -103,13 +122,21 @@ export default function HomePage() {
 
       <section id="collections" className="section">
         <div className="container twoCol">
-          <div className="card animate delay-1">
-            <div className="cardImageWrapper" style={{ height: '600px' }}>
-              <Image
-                src="/images/the-family/family-1.jpg"
-                alt="Family Legacy"
-                fill
-              />
+          <div className="card animate delay-1" style={{ height: '600px' }}>
+            <div className="cardImageWrapper" style={{ height: '100%', position: 'relative' }}>
+              {familyImages.map((src, index) => (
+                <div
+                  key={src}
+                  className={`slide ${index === currentSlide ? 'active' : ''}`}
+                >
+                  <Image
+                    src={src}
+                    alt={`Family Legacy ${index + 1}`}
+                    fill
+                    style={{ objectFit: 'cover' }}
+                  />
+                </div>
+              ))}
             </div>
           </div>
           <div className="animate delay-2">
@@ -120,14 +147,6 @@ export default function HomePage() {
               culture, preserved and protected by the Abouothman family. Our passion is
               to bridge the gap between ancient artistry and modern lifestyle.
             </p>
-            <div className="grid3" style={{ gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
-              <div className="cardImageWrapper" style={{ height: '200px' }}>
-                <Image src="/images/the-family/family-2.jpg" alt="Family 2" fill />
-              </div>
-              <div className="cardImageWrapper" style={{ height: '200px' }}>
-                <Image src="/images/the-family/family-3.jpg" alt="Family 3" fill />
-              </div>
-            </div>
           </div>
         </div>
       </section>
