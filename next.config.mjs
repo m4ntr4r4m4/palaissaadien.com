@@ -1,23 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-<<<<<<< HEAD
-  output: 'export',
+  output: 'export', // Produce a static site (HTML/CSS/JS) for GitHub Pages
   images: {
-    unoptimized: true,
+    unoptimized: true, // Required: static export can't run the image optimizer
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'www.palaissaadien.com'
-      }
-    ]
-  }
-=======
-  output: 'export', // Tells Next.js to produce a static site (HTML/CSS/JS)
-  basePath: '/palaissaadien.com', // Replace with your repo name
-  images: {
-    unoptimized: true, // Required for static export on GitHub Pages
+        hostname: 'www.palaissaadien.com',
+      },
+    ],
   },
->>>>>>> 547d39f53b36d28710e7134aa0f4119a8c34e1cc
 };
 
 export default nextConfig;
